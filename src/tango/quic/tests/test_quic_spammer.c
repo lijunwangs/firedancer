@@ -254,6 +254,11 @@ int main( int argc, char ** argv ) {
   client_cfg->net.ephem_udp_port.lo = (ushort)udpsock->listen_port;
   client_cfg->net.ephem_udp_port.hi = (ushort)( udpsock->listen_port + 1 );
 
+  // ALPN fixes
+  char cpy[11] = "\x0asolana-tpu"; // ALPN
+  memcpy(client_cfg->alpns, cpy, 11);
+  client_cfg->alpns_sz = 11; // number of bytes of ALPN - see spec
+
   if ( FD_UNLIKELY( argc > 1 ) )
     FD_LOG_ERR( ( "unrecognized argument: %s", argv[1] ) );
 
